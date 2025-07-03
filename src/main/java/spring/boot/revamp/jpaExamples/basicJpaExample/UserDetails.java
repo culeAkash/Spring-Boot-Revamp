@@ -1,9 +1,12 @@
 package spring.boot.revamp.jpaExamples.basicJpaExample;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 @Entity
 @Table(name = "App_User")
+@Cache(usage = CacheConcurrencyStrategy.READ_WRITE,region = "userDetailsCache")
 public class UserDetails {
 
     @Id
