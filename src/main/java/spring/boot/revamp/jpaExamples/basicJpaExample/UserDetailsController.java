@@ -1,4 +1,4 @@
-package spring.boot.revamp.jpaExamples.basicJpaExample;
+package spring.boot.revamp.jpaExamples.basicJpaExample.;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,11 +18,31 @@ public class UserDetailsController {
 
     @GetMapping("/test-jpa")
     public List<UserDetails> getUser(){
-        UserDetails userDetails = new UserDetails(
-                "xyz",
-                "akash@gmail.com"
-        );
-        this.userDetailsService.saveUser(userDetails);
-        return this.userDetailsService.getAllUsers();
+        UserDetailsCK userDetailsCK = new UserDetailsCK();
+        userDetailsCK.setName("Akash");
+        userDetailsCK.setAddress("Kolkata");
+        UserDetails userDetails = UserDetails.builder()
+                .email("akash@gmail.com")
+                .phone("123456789")
+                .userDetailsCK(
+                        userDetailsCK
+                )
+                .build();
+        UserDetails savedUser = this.userDetailsService.saveUser(userDetails);
+//        this.userDetailsService.getAllUsers();
+//         this.userDetailsService.getUserById(savedUser.getUserId());
+        return null;
+    }
+
+    @GetMapping("/test-jpa2")
+    public UserDetails getSingleUser(){
+        this.userDetailsService.getUserById(1L);
+        return this.userDetailsService.getUserById(1L).get();
+    }
+
+    @GetMapping("/test-jpa3")
+    public UserDetails getSingleUser2(){
+        this.userDetailsService.getUserById(1L);
+        return this.userDetailsService.getUserById(1L).get();
     }
 }
